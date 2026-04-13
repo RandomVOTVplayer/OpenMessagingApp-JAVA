@@ -1,0 +1,16 @@
+{
+    "data":{
+        "ListeningPort":5757,
+        "ListeningIP":"127.0.0.1",
+        "IsServer":false,
+        "IsExternal":false
+    },
+    "userData":{
+        "UUID":"null",
+        "Username":"null"
+    },
+    "target":{
+        "IP":"127.0.0.1",
+        "Port":5757
+    }
+}
