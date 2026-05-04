@@ -1,0 +1,15 @@
+{
+    "UserData":{
+        "UUID":"null",
+        "Username":"null"
+    },
+    "TargetInfo":{
+        "IP":"127.0.0.1",
+        "Port":5757,
+        "Server":false
+    },
+    "Internal":{
+        "Port":5757,
+        "IP":"127.0.0.1"
+    }
+}
