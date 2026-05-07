@@ -27,7 +27,7 @@ public class Menu {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // restore interrupt status
         }
-        ScreenLib.Clear();
+        //ScreenLib.Clear();
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

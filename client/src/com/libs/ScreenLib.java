@@ -29,11 +29,11 @@ public class ScreenLib {
         }
     }
     
-    public static void pause(time) {
+    /*public static void pause(time) {
         try {
-            Thread.sleep(time)
+            Thread.sleep(time);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // restore interrupt status
         }
-    }
+    }*/
 }
