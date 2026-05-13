@@ -29,11 +29,19 @@ public class ScreenLib {
         }
     }
     
-    /*public static void pause(time) {
+    public static void pause(int time) {
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // restore interrupt status
         }
-    }*/
+    }
+    
+    public static class Colors {
+        // Use cases are listed on each line
+        public static String RESET = "\033[0m"; // Normal text
+        public static String RED = "\033[91m"; // Errors / Critical warnings / caught exceptions
+        public static String GREEN = "\033[92m"; // Titles / notes
+        public static String YELLOW = "\033[93m"; // Warning / Brings attention / Notices
+    }
 }
