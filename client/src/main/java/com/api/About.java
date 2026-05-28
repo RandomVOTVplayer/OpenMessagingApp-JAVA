@@ -7,6 +7,7 @@ package com.api;
 */
 
 import com.libs.ScreenLib;
+import com.libs.Logging.Logger;
 import com.libs.IO;
 
 public class About {
@@ -18,6 +19,7 @@ public class About {
         static int page = 0; // current page index
         static boolean debug = false; //toggles some debug outputs
         public static void TutorialStart() {
+            Logger.log("About|Tutorial", "INFO", "Initializing Tutorial");
             while (true) {
                 ScreenLib.Clear();
                 if (page >= sites.length | page < 0) {
