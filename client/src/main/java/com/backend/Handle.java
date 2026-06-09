@@ -8,8 +8,10 @@ when inititally starting the program.
 // imports
 import java.io.IOException;
 
+
 import com.libs.ScreenLib;
 import com.api.Menu;
+import com.backend.ThreadController.services;
 import com.libs.Logging.Logger;
 import com.libs.Consts;
 import com.libs.JSONHandler;
@@ -17,8 +19,12 @@ import com.networking.ConMan;
 
 
 public class Handle {
+
     private static boolean status = true;
     public static void main(String[] args) {
+        ThreadController.startAThread(services.JSON_UPDATE);
+        ThreadController.startAThread(services.QT);
+
         Logger.initLogger();
         try {
             JSONHandler.ensureDataExists();
@@ -27,9 +33,6 @@ public class Handle {
             System.err.println(e);
             return;
         }
-        // JSON threading
-        ThreadController.JSONUpdate JSONThread = new ThreadController.JSONUpdate();
-        JSONThread.startThread();
 
         // the below will be switched from running in the handle to running in the Menu.
         while (status) {
@@ -41,28 +44,18 @@ public class Handle {
                 }
                 case 1: { // Shutdown initiated by user. Program will exit
                     Logger.log("Handle", "INFO", "User-Initiated shutdown.");
-                    JSONThread.stopThread();
+                    ThreadController.stopAllThreads();
                     return;
                 }
                 default: {
                     Logger.log("backend/Handle/main", "ERROR", "The Program encountered an error and cannot continue.");
                     System.out.println(ScreenLib.Colors.RED+"The Program encountered an error and cannot continue.");
-                    JSONThread.stopThread();
+                    ThreadController.stopAllThreads();
                     return;
                 }
             }
-            // this will remain
-            boolean Check = true; //UserKit.verifyAccount();
-            if (Check) {
-                ConMan cm = new ConMan();
-                cm.PASC();
-            } else {
-                JSONThread.stopThread();
-                Logger.log("Handle", "ERROR", "Failed to verify authenticity of the user account. Returned "+Check);
-                throw new RuntimeException("Failed to verify authenticity of the user account. Returned "+Check);
-            }
         }
-        JSONThread.stopThread();
+        ThreadController.stopAllThreads();
     }
     
 }

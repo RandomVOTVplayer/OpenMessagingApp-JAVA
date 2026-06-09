@@ -3,6 +3,7 @@ package com.api;
 
 import com.libs.ScreenLib;
 import com.libs.UserKit;
+import com.networking.ConMan;
 import com.libs.Logging.Logger;
 import com.libs.ScreenLib.Colors;
 
@@ -23,13 +24,13 @@ public class Menu {
     public static boolean interrupt = false;
     // Main Menu
     public static int start(String welcome) {
-        Logger.log("Menu|start", "INFO", "Initializing 'Menu.java'");
+        Logger.log("api/Main/start", "INFO", "Initializing 'Menu.java'");
         String[] options = {"Connect","Settings","About the program","Quit"};
         boolean reprint = true;
 
         while(true) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(750); 
             } catch (InterruptedException e) {
                 Logger.log("api/Menu/start", "FATAL", "Runtime Exception caught\n"+e);
                 throw new RuntimeException(e);
@@ -43,8 +44,9 @@ public class Menu {
                 IO.write("Use the numbers above to make a selection: ");
                 switch (Integer.parseInt(IO.read("return"))) {
                     case 1: {
-                        reprint = false; // is this neccesary?
-                        return 0;
+                        ConMan cm = new ConMan();
+                        ConMenu();
+                        break;
                     }
                     case 2: {
                         settings();
@@ -215,5 +217,15 @@ public class Menu {
             interrupt = false;
             return;
         }
+    }
+    private static void ConMenu() {
+        Logger.log("api/Menu/ConMenu", "INFO", "preparing Connection Menu");
+        String[] options = {"Start/Stop listening for connection requests.", "Attempt a connection"};
+        ScreenLib.Clear();
+        System.out.println(green+"Connection Menu"+reset);
+        for (int i = 0; i < options.length; i++) {
+            System.out.println((i+1)+". "+options[i]);
+        }
+        IO.write("Make a selection from the numbers above: ");
     }
 }
