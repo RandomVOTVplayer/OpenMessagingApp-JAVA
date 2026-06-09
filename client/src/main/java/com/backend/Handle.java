@@ -22,10 +22,27 @@ public class Handle {
 
     private static boolean status = true;
     public static void main(String[] args) {
-        ThreadController.startAThread(services.JSON_UPDATE);
-        ThreadController.startAThread(services.QT);
-
         Logger.initLogger();
+        Data.ProgramArgs = args;
+        Logger.log("backend/handle/main", "INFO", "Started program with the following arguments: "+Data.ProgramArgs);
+        Logger.log("backend/handler/main", "URGENT | NOTICE | LOOK AT ME", "Do not forget to remove unnecessary code and imports before V1.0.0 release!");
+        try {
+            for (int i = 0; i < Data.ProgramArgs.length; i++) {
+                if (Data.ProgramArgs[i].equals("--no-Fluff") | Data.ProgramArgs[i].equals("-nf")) {
+                    Data.noFluff = true;
+                } 
+                if (Data.ProgramArgs[i].equals("-h") | Data.ProgramArgs[i].equals("--help")) {
+                    System.out.println("\nAvailable flags:\n");
+                    System.out.println("-h --help          Show this page");
+                    System.out.println("-nf --no-Fluff     Turns off jokes in log file");
+                    return;
+                }
+            }
+        } finally {}
+        if (!(Data.noFluff)) {
+            Logger.log("backend/Handle/main", "INFO", "Note: if the Joke logs are intrusive, you can start the program with -nf or --no-Fluff to disable them.");
+            ThreadController.startAThread(services.QT);
+        }
         try {
             JSONHandler.ensureDataExists();
             JSONHandler.writeJsonToJava();
@@ -33,6 +50,7 @@ public class Handle {
             System.err.println(e);
             return;
         }
+        ThreadController.startAThread(services.JSON_UPDATE);
 
         // the below will be switched from running in the handle to running in the Menu.
         while (status) {

@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import com.api.Menu;
 import com.libs.Logging.Logger;
+import com.backend.Data;
 
 public class IO {
     private static final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -51,16 +52,18 @@ public class IO {
                     String line = in.readLine();
                     return line;
                 }
-                try {
-                    jokeCounter = jokeCounter + 1; // fun fact: it takes about 25 seconds for this counter to reach 500
-                    if (jokeCounter >= 500) {
-                        Logger.log("libs/IO", "JOKE", "sleepy time :)");
-                        jokeCounter = 0;
+                if (!Data.noFluff) {
+                    try {
+                        jokeCounter = jokeCounter + 1; // fun fact: it takes about 25 seconds for this counter to reach 500
+                        if (jokeCounter >= 500) {
+                            Logger.log("libs/IO", "JOKE", "sleepy time :)");
+                            jokeCounter = 0;
+                        }
+                            Thread.sleep(50); // small sleep to avoid busy wait
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        return null;
                     }
-                        Thread.sleep(50); // small sleep to avoid busy wait
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                    return null;
                 }
             }
         } catch (IOException e) {

@@ -60,7 +60,7 @@ public class ThreadController {
                 JSON_UPDATE.startThread();
             }
             if (threadName.equals(services.QT) && !ThreadStatus.QuadThink) {
-                
+                QUAD_THINK.startThread();
             }
             if (threadName.equals(services.CPTP) && !ThreadStatus.CPTP) {
 
