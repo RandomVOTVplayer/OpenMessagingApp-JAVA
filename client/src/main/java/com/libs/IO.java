@@ -6,6 +6,7 @@ import java.io.IOException;
 import com.api.Menu;
 import com.libs.Logging.Logger;
 import com.backend.Data;
+import com.backend.RAM;
 
 public class IO {
     private static final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -52,7 +53,7 @@ public class IO {
                     String line = in.readLine();
                     return line;
                 }
-                if (!Data.noFluff) {
+                if (!RAM.Normal_Variables.noFluff) {
                     try {
                         jokeCounter = jokeCounter + 1; // fun fact: it takes about 25 seconds for this counter to reach 500
                         if (jokeCounter >= 500) {

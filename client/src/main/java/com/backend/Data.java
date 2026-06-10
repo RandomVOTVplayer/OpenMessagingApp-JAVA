@@ -1,9 +1,6 @@
 package com.backend;
 
 public class Data {
-    public static String[] ProgramArgs;
-    public static boolean noFluff = false; // No joke code
-    public static Boolean threadStatus = true; //purely so multiple threads can start/stop at the same time.
     // Public static variables for global access to configuration and data.
     //public static final Config CONFIG = new Config();
     public static class DataStore {

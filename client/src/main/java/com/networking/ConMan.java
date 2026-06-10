@@ -21,7 +21,7 @@ import com.backend.ThreadController.services;
 
 public class ConMan {
 
-    public void PASC() { // Prepare And Start Connection. Or PASCO (the O being the '()')
+    public static void PASC() { // Prepare And Start Connection. Or PASCO (the O being the '()')
         //This is to be called prior to every connection attempt.
         if (UserKit.verifyAccount() == false) {
             Logger.log("networking/ConMan/openSocket", "ERROR", "Could not verify account.");

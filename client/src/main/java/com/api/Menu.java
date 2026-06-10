@@ -14,7 +14,10 @@ import java.net.Socket;
 import java.util.Scanner;
 
 import com.backend.Data;
-import com.libs.IO;;
+import com.backend.ThreadController.services;
+import com.libs.IO;
+import com.networking.ConMan;
+import com.backend.ThreadController;
 
 public class Menu {
     static String red = ScreenLib.Colors.RED;
@@ -227,5 +230,19 @@ public class Menu {
             System.out.println((i+1)+". "+options[i]);
         }
         IO.write("Make a selection from the numbers above: ");
+
+        switch(IO.read("return")) {
+            case "1": {
+                ConMan.PASC();
+                break;
+            }
+            case "2": {
+                ThreadController.startAThread(services.HEARTBEAT);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     }
 }

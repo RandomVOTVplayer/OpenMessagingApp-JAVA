@@ -29,6 +29,7 @@ replay_pid*
 *.txt
 
 */target
+target
 Data.json
 .vscode/settings.json
 target/parent-project-0.1.0-SNAPSHOT-shaded.pom

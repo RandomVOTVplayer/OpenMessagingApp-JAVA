@@ -1,12 +1,20 @@
 package com.backend;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import com.api.Menu;
 import com.libs.JSONHandler;
@@ -49,11 +57,10 @@ public class ThreadController {
         these are not made yet :down_arrow:
         CLIENT_PEER_TO_PEER.stopThread();
         SERVER_MANAGER.stopThread();
-        HEARTBEAT.stopThread();
         */
+        HEARTBEAT.stopThread();
         LISTEN_INCOMING.stopThread();
     }
-
     public static void startAThread(Enum<services> threadName) { // starts a thread for ye
         try {
             if (threadName.equals(services.JSON_UPDATE) && !ThreadStatus.JSONupdate) {
@@ -69,7 +76,7 @@ public class ThreadController {
 
             }
             if (threadName.equals(services.HEARTBEAT) && !ThreadStatus.HEARTBEAT) {
-
+                HEARTBEAT.startThread();
             }
             if (threadName.equals(services.LI) && !ThreadStatus.LI) {
                 LISTEN_INCOMING.startThread();
@@ -162,8 +169,70 @@ public class ThreadController {
     }
     private static class serverMan {} //manages specific information for use with server connections
 
-    private static class Heartbeat /*implements Runnable*/ {
+    private static class Heartbeat implements Runnable {
         // buh dum
+        private volatile boolean running = false;
+        private Thread worker;
+
+        public void startThread() throws IOException {
+            if (running) {
+                return;
+            }
+            Logger.log("backend/ThreadController/HeartBeat/startThread", "INFO", "Starting thread 'Heartbeat'");
+            running = true;
+            worker = Thread.ofVirtual().unstarted(this);
+            worker.start();
+        }
+        public void stopThread() {
+            Logger.log("backend/ThreadController/Heartbeat/stopThread", "INFO", "Stopping Thread 'Heartbeat'");
+            worker.interrupt();
+            try {
+                worker.join(2000);
+            } catch (InterruptedException ignored) {}
+        }
+
+        public void run() {
+            ThreadStatus.HEARTBEAT = true;
+            ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+            long lastPongTime = System.currentTimeMillis();
+            Socket socket = null;
+
+            while (running && socket == null) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ignored) {}
+                
+                try {
+                    socket = new Socket(Data.STORE.targetInfo.ip, Data.STORE.targetInfo.port);
+                } catch (IOException e) {
+                    Logger.log("backend/ThreadController/Heartbeat/run", "ERROR", "\n"+e);
+                }
+            }
+            try (PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true)) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                scheduler.scheduleAtFixedRate( () -> { pw.println("PING"); }, 0, 30, TimeUnit.SECONDS);
+                while (running) {
+                    String in = reader.readLine();
+                    Logger.log("","", in); // to quickly check
+                    switch (in) {
+                        case "PONG": {
+                            lastPongTime = System.currentTimeMillis();
+                            break;
+                        }
+                        case "PING": {
+                            pw.println("PONG");
+                            break;
+                        }
+                    }
+                    if ((System.currentTimeMillis() - lastPongTime) > 30000) {
+                        Logger.log("debug line 213", "WARN", "That pingpong sure took awhile. PingPong took longer than 30 seconds!");
+                    }
+                }
+            } catch (Exception e) {
+                Logger.log("backend/ThreadController/Heartbeat/run", "ERROR", "\n"+e);
+            }
+            ThreadStatus.HEARTBEAT = false;
+        }
     }
 
     // Thread

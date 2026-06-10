@@ -16,6 +16,7 @@ import com.libs.Logging.Logger;
 import com.libs.Consts;
 import com.libs.JSONHandler;
 import com.networking.ConMan;
+import com.backend.RAM;
 
 
 public class Handle {
@@ -23,15 +24,15 @@ public class Handle {
     private static boolean status = true;
     public static void main(String[] args) {
         Logger.initLogger();
-        Data.ProgramArgs = args;
-        Logger.log("backend/handle/main", "INFO", "Started program with the following arguments: "+Arrays.toString(Data.ProgramArgs));
+        RAM.Normal_Variables.ProgramArgs = args;
+        Logger.log("backend/handle/main", "INFO", "Started program with the following arguments: "+Arrays.toString(RAM.Normal_Variables.ProgramArgs));
         Logger.log("backend/handler/main", "URGENT | NOTICE | LOOK AT ME", "Do not forget to remove unnecessary code and imports before V1.0.0 release!");
         try {
-            for (int i = 0; i < Data.ProgramArgs.length; i++) {
-                if (Data.ProgramArgs[i].equals("--no-Fluff") | Data.ProgramArgs[i].equals("-nf")) {
-                    Data.noFluff = true;
+            for (int i = 0; i < RAM.Normal_Variables.ProgramArgs.length; i++) {
+                if (RAM.Normal_Variables.ProgramArgs[i].equals("--no-Fluff") | RAM.Normal_Variables.ProgramArgs[i].equals("-nf")) {
+                    RAM.Normal_Variables.noFluff = true;
                 } 
-                if (Data.ProgramArgs[i].equals("-h") | Data.ProgramArgs[i].equals("--help")) {
+                if (RAM.Normal_Variables.ProgramArgs[i].equals("-h") | RAM.Normal_Variables.ProgramArgs[i].equals("--help")) {
                     System.out.println("\nAvailable flags:\n");
                     System.out.println("-h --help          Show this page");
                     System.out.println("-nf --no-Fluff     Turns off jokes in log file");
@@ -39,7 +40,7 @@ public class Handle {
                 }
             }
         } finally {}
-        if (!(Data.noFluff)) {
+        if (!(RAM.Normal_Variables.noFluff)) {
             Logger.log("backend/Handle/main", "INFO", "Note: if the Joke logs are intrusive, you can start the program with -nf or --no-Fluff to disable them.");
             ThreadController.startAThread(services.QT);
         }
