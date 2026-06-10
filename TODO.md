@@ -6,11 +6,12 @@
 - [X] Fix bug 2 (github)
 - [ ] Fix bug 3 (github)
 - [ ] Fix bug 4 (github)
-- [ ] Fix bug 5 (github)
+- [X] Fix bug 5 (github)
 
 ## Networking
 
 - [ ] make the frame of the network connection
+- [ ] Finish making the connection manager menu
 
 ## Threadding
 

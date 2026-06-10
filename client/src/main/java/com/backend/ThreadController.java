@@ -89,6 +89,7 @@ public class ThreadController {
             Logger.log("backend/ThreadController/stopThread", "INFO", "Thread JSONUpdate stopping");
             running = false;
             if (worker != null) {
+                worker.interrupt();
                 try { worker.join(2000); } catch (InterruptedException ignored) {}
             }
             ThreadStatus.JSONupdate = false;

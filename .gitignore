@@ -33,3 +33,4 @@ Data.json
 .vscode/settings.json
 target/parent-project-0.1.0-SNAPSHOT-shaded.pom
 client/dependency-reduced-pom.xml
+client/src/main/java/com/api/Test.java
