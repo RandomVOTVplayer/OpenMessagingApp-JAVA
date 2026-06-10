@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.oma</groupId>
     <artifactId>parent-project</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath> <!-- points to repo-root/pom.xml -->
   </parent>
 

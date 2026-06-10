@@ -16,3 +16,4 @@
 ## Threadding
 
 - [ ] Finish ThreadController start/stop
+- [ ] Remove unnecisary worker null checks in ThreadControler
