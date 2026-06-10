@@ -7,7 +7,7 @@ when inititally starting the program.
 
 // imports
 import java.io.IOException;
-
+import java.util.Arrays;
 
 import com.libs.ScreenLib;
 import com.api.Menu;
@@ -24,7 +24,7 @@ public class Handle {
     public static void main(String[] args) {
         Logger.initLogger();
         Data.ProgramArgs = args;
-        Logger.log("backend/handle/main", "INFO", "Started program with the following arguments: "+Data.ProgramArgs);
+        Logger.log("backend/handle/main", "INFO", "Started program with the following arguments: "+Arrays.toString(Data.ProgramArgs));
         Logger.log("backend/handler/main", "URGENT | NOTICE | LOOK AT ME", "Do not forget to remove unnecessary code and imports before V1.0.0 release!");
         try {
             for (int i = 0; i < Data.ProgramArgs.length; i++) {
@@ -47,6 +47,7 @@ public class Handle {
             JSONHandler.ensureDataExists();
             JSONHandler.writeJsonToJava();
         } catch (IOException e) {
+            Logger.log("backend/Handle/main", "FATAL", "FATAL ERROR - Problem syncing internal Data store.\n"+e);
             System.err.println(e);
             return;
         }

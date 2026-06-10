@@ -31,6 +31,5 @@ replay_pid*
 */target
 Data.json
 .vscode/settings.json
-.gitignore
 target/parent-project-0.1.0-SNAPSHOT-shaded.pom
 client/dependency-reduced-pom.xml

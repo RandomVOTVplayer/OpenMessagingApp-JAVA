@@ -125,7 +125,7 @@ public class ThreadController {
             running = true;
             worker = new Thread(this, "quadThink");
             worker.start();
-            ThreadStatus.JSONupdate = true;
+            ThreadStatus.QuadThink = true;
         }
         public synchronized void stopThread() {
             running = false;
@@ -134,10 +134,12 @@ public class ThreadController {
                 worker.interrupt();
                 try { worker.join(2000); } catch (InterruptedException ignored) {}
             }
+            /*
             if (worker == null) {
                 Logger.log("debug", "debug", "the thing returned null");
             }
-            ThreadStatus.JSONupdate = false;
+            */
+            ThreadStatus.QuadThink = false;
         }
         @Override
         public void run() {
