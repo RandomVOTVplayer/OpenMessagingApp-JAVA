@@ -10,14 +10,23 @@ import com.backend.RAM;
 
 public class IO {
     private static final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
     private static int jokeCounter = 0;
     private static class Store {
         static volatile String input;
     }
+    private static void drainInputBuffer() {
+        try {
+            while(System.in.available() > 0) { // while the input buffer (in bytes) is greater than 0 (empty)
+                System.in.read(); // consume a byte untill the buffer is empty (bassically what the while loop is trying to do)
+            }
+        } catch (IOException e) {
+            Logger.log("libs/IO/drainBuffer", "ERROR", "Exception caught:\n" + e);
+        }
+    }
 
     public static void write(String ask) {
         System.out.print(ask);
+        drainInputBuffer();
         Store.input = readLineInterruptible();
     }
 

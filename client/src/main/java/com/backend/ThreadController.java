@@ -197,15 +197,18 @@ public class ThreadController {
             long lastPongTime = System.currentTimeMillis();
             Socket socket = null;
 
-            while (running && socket == null) {
-                try {
+            while (running && socket == null) { 
+                /*try {
                     Thread.sleep(1000);
-                } catch (InterruptedException ignored) {}
+                } catch (InterruptedException ignored) {}*/
                 
                 try {
                     socket = new Socket(Data.STORE.targetInfo.ip, Data.STORE.targetInfo.port);
                 } catch (IOException e) {
                     Logger.log("backend/ThreadController/Heartbeat/run", "ERROR", "\n"+e);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ignored) {}
                 }
             }
             try (PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true)) {

@@ -5,8 +5,9 @@
 - [ ] Remove excess code
 - [X] Fix bug 2 (github)
 - [ ] Fix bug 3 (github)
-- [ ] Fix bug 4 (github)
+- [X] Fix bug 4 (github)
 - [X] Fix bug 5 (github)
+- [ ] Put more code comments around the program. (got tired of not knowing why I wrote something)
 
 ## Networking
 
