@@ -14,7 +14,7 @@ public class IO {
     private static class Store {
         static volatile String input;
     }
-    private static void drainInputBuffer() {
+    private static void drainInputBuffer() { //IO.write() fix seen here is attributed to PratikJoshi22 for helping investigate the cause and come up with a fix. See issue #4 for details on the problem.
         try {
             while(System.in.available() > 0) { // while the input buffer (in bytes) is greater than 0 (empty)
                 System.in.read(); // consume a byte untill the buffer is empty (bassically what the while loop is trying to do)
