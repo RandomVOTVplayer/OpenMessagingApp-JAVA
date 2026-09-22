@@ -184,6 +184,7 @@ public class ThreadController {
             worker.start();
         }
         public void stopThread() {
+            if (!running) return;
             Logger.log("backend/ThreadController/Heartbeat/stopThread", "INFO", "Stopping Thread 'Heartbeat'");
             worker.interrupt();
             try {
@@ -239,7 +240,7 @@ public class ThreadController {
     }
 
     // Thread
-    private static class ListenIncoming implements Runnable {
+    private static class ListenIncoming implements Runnable { // subject or rewriting
         // listens for incoming connections
         private volatile boolean running = false;
         private ServerSocket server;
@@ -285,7 +286,8 @@ public class ThreadController {
                 while (running) {
                     try {
                         Socket client = s.accept();
-                        Logger.log("networking/ConMan/ListenIncoming/run", "INFO", "Incoming request");
+                        Logger.log("networking/ConMan/ListenIncoming/run", "INFO", "Accepted Incoming request");
+                        Logger.log("networking/ConMan/ListenIncoming/run", "INFO", "Starting Virtual Thread of: Menu.chat()");
                         Thread.ofVirtual().start(() -> Menu.chat(client));
                     } catch (SocketException e) {
                         if (!running) break; // expected during shutdown

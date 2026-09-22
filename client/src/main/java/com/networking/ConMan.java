@@ -25,6 +25,7 @@ public class ConMan {
         //This is to be called prior to every connection attempt.
         if (UserKit.verifyAccount() == false) {
             Logger.log("networking/ConMan/openSocket", "ERROR", "Could not verify account.");
+            return;
         }
         Logger.log("ConMan/PASC", "INFO", "Preparing Connection Manager");
         ScreenLib.Clear();
@@ -35,9 +36,13 @@ public class ConMan {
             IO.write("Please put in the IP of the target you wish to connect to (I.e 127.0.0.1): ");
             Data.STORE.targetInfo.ip = IO.read("return");
             Logger.log("networking/ConMan/PASC", "INFO", ("Set target IP to "+Data.STORE.targetInfo.ip));
-            IO.write("Please enter the port of the client you wish to connect to (send def to leave as default): ");
-            if (!IO.read("return").equals("def")) {
-                Data.STORE.targetInfo.port = Integer.parseInt(IO.read("return"));
+            IO.write("Please enter the port of the client you wish to connect to (Press enter to set to default): ");
+            if (!IO.read("return").equals(null)) {
+                if (!IO.read("return").equals("")) {
+                    Data.STORE.targetInfo.port = 1773;
+                } else {
+                    Data.STORE.targetInfo.port = Integer.parseInt(IO.read("return"));
+                }
                 Logger.log("networking/ConMan/PASC", "INFO", ("Set target port as "+IO.read("return")));
             } else {
                 Logger.log("networking/ConMan/PASC", "INFO", "Set target port as 1773");
@@ -57,8 +62,8 @@ public class ConMan {
                 IO.write("Please put in the IP of the target you wish to connect to (I.e 127.0.0.1): ");
                 Data.STORE.targetInfo.ip = IO.read("return");
                 Logger.log("networking/ConMan/PASC", "INFO", ("Set target IP to "+Data.STORE.targetInfo.ip));
-                IO.write("Please enter the port of the client you wish to connect to (send def to leave as default): ");
-                if (!IO.read("return").equals("def")) {
+                IO.write("Please enter the port of the client you wish to connect to (Press enter to use default): ");
+                if (!IO.read("return").equals("")) {
                     Data.STORE.targetInfo.port = Integer.parseInt(IO.read("return"));
                     Logger.log("networking/ConMan/PASC", "INFO", ("Set target port as "+IO.read("return")));
                 } else {
@@ -70,12 +75,5 @@ public class ConMan {
         }
         Logger.log("networking/ConMan/PASC", "INFO", "Start networked connection.");
         ThreadController.startAThread(services.LI);
-        /*try {
-            li.run();
-        } catch (IOException e) {
-            Logger.log("networking/ConMan/PASC", "ERROR", ("Caught exception:\n"+e));
-            System.err.println("A problem has been encountered during execution. More details in latest log file");
-            ScreenLib.pause(1500);
-        }*/
     }
 }

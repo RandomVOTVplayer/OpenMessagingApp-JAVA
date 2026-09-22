@@ -28,7 +28,13 @@ public class About {
                     System.out.println(sites[page]);
                 }
                 IO.write("What page would you like to view next? (press 1 for the Table of Contents) ");
-                page = Integer.parseInt(IO.read("return"));
+                if (IO.read("return").equals("")) {
+                    System.out.print("Please input a number. Other characters are not permitted.\n");
+                    ScreenLib.pause(1500);
+                    continue;
+                } else {
+                    page = Integer.parseInt(IO.read("return"));
+                }
                 if (page == 0) {
                     break;
                 }

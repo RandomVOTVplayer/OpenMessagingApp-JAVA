@@ -47,7 +47,8 @@ public class IO {
                 throw new RuntimeException("Store.input returned null");
             }
         }
-        return "Make sure that 'out' and 'return' are lowercase - IO.java: Line 32";
+        Logger.log("libs/IO/read", "FATAL", "Make sure that 'out' and 'return' are lowercase - IO.java: Line 50");
+        return "Make sure that 'out' and 'return' are lowercase - IO.java: Line 50";
     }
 
     private static String readLineInterruptible() {

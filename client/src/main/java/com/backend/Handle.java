@@ -17,7 +17,7 @@ import com.libs.Consts;
 import com.libs.JSONHandler;
 import com.networking.ConMan;
 import com.backend.RAM;
-
+import com.libs.UserKit;
 
 public class Handle {
 
@@ -26,7 +26,6 @@ public class Handle {
         Logger.initLogger();
         RAM.Normal_Variables.ProgramArgs = args;
         Logger.log("backend/handle/main", "INFO", "Started program with the following arguments: "+Arrays.toString(RAM.Normal_Variables.ProgramArgs));
-        Logger.log("backend/handler/main", "URGENT | NOTICE | LOOK AT ME", "Do not forget to remove unnecessary code and imports before V1.0.0 release!");
         try {
             for (int i = 0; i < RAM.Normal_Variables.ProgramArgs.length; i++) {
                 if (RAM.Normal_Variables.ProgramArgs[i].equals("--no-Fluff") | RAM.Normal_Variables.ProgramArgs[i].equals("-nf")) {
@@ -53,6 +52,12 @@ public class Handle {
             return;
         }
         ThreadController.startAThread(services.JSON_UPDATE);
+        if (!Data.STORE.userData.uuid.equals("none")) {
+            ThreadController.startAThread(services.LI);
+        } else {
+            UserKit.verifyAccount();
+        }
+        
 
         // the below will be switched from running in the handle to running in the Menu.
         while (status) {
